@@ -128,7 +128,6 @@ const NavBar = () => {
           </li>
           <hr className="border-slate-600" />
           <div className="flex justify-center md:hidden mt-3">
-            <DarkThemeToggle />
           </div>
         </Navbar.Collapse>
       </Navbar>
