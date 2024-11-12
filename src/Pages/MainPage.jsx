@@ -22,8 +22,7 @@ const MainPage = () => {
     <Flowbite>
       <div className="dark:bg-gray-900 dark:text-white">
         <NavBar />
-        <div className="h-20" />
-        <div className="min-h-[calc(100vh-80px-249px)] ">
+        <div className="min-h-[calc(100vh-249px)] ">
           <main className="lg:max-w-screen-xl md:max-w-[800px] m-auto">
             <Outlet />
           </main>
