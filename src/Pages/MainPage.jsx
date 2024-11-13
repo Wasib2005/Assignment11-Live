@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import NavBar from "../Components/NavBar/NavBar";
 import { useEffect } from "react";
 import FooterComponents from "../Components/FooterComponents";
+import Loading from "../Components/Loading";
 
 const MainPage = () => {
   useThemeMode();
@@ -22,8 +23,9 @@ const MainPage = () => {
     <Flowbite>
       <div className="dark:bg-gray-900 dark:text-white">
         <NavBar />
-        <div className="min-h-[calc(100vh-249px)] ">
+        <div className="min-h-[calc(100vh-249px-76px)] ">
           <main className="lg:max-w-screen-xl md:max-w-[800px] m-auto">
+            {/* <Loading /> */}
             <Outlet />
           </main>
         </div>
