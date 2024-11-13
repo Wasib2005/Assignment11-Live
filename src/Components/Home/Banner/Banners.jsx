@@ -12,13 +12,14 @@ const Banners = () => {
       </>
     );
   if (error) {
-    console.log(error);
+    console.log(error)
+    return <p>Something Went Wrong</p>
   }
   return (
     <div className="mt-5 md:mt-10 lg:mt-16">
       <Carousel slideInterval={5000}>
         {data.map((e) => (
-          <Banner key={e._id} data={e} />
+          <Banner key={`B${e._id}`} data={e} />
         ))}
       </Carousel>
     </div>

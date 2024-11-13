@@ -1,5 +1,5 @@
 import { DarkThemeToggle } from "flowbite-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { HiMenu, HiX } from "react-icons/hi"; // Menu and close icons
 
@@ -11,7 +11,7 @@ const NavBar = () => {
     `w-full md:w-[130px] p-1 md:p-3 md:rounded-lg ${
       isActive
         ? "border-2 border-green-500 dark:bg-[#1f2937]"
-        : "hover:bg-green-500"
+        : "hover:bg-green-500 transition delay-50 duration-700 hover:scale-105 "
     }`;
 
   const navLinks = (

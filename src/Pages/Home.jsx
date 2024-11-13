@@ -1,14 +1,13 @@
-
 import Banners from "../Components/Home/Banner/Banners";
-import useDataFetching from "../Hooks/useDataFetching";
+import Favorite from "../Components/Home/TopFavorite/Favorite";
 
 const Home = () => {
-
-    return (
-        <div>
-            <Banners/>
-        </div>
-    );
+  return (
+    <div>
+      <Banners />
+      <Favorite />
+    </div>
+  );
 };
 
 export default Home;
