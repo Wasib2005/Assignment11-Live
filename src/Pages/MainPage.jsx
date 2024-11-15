@@ -8,6 +8,7 @@ import Loading from "../Components/Loading";
 const MainPage = () => {
   useThemeMode();
   const { mode } = useThemeMode();
+  
 
   useEffect(() => {
     if (mode === "dark") {
@@ -25,7 +26,7 @@ const MainPage = () => {
         <NavBar />
         <div className="min-h-[calc(100vh-249px-76px)] ">
           <main className="lg:max-w-screen-xl md:max-w-[800px] m-auto">
-            {/* <Loading /> */}
+            <Loading />
             <Outlet />
           </main>
         </div>

@@ -1,31 +1,28 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import { RotatingSquare } from "react-loader-spinner";
+import { LoadingContext } from "../Contexts/LoadingContext";
 
-const Loading = ({ message }) => {
-  const [dots, setDots] = useState(".");
+const Loading = () => {
+  const { isLoading, error } = useContext(LoadingContext);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDots((prev) => (prev.length < 4 ? prev + "." : "."));
-    }, 500); // Change every 500ms
-
-    return () => clearInterval(interval); // Cleanup on unmount
-  }, []);
-
-  return (
-    <div className="flex items-center justify-center">
-      <div className="text-center">
-        <RotatingSquare
-          visible={true}
-          height="100"
-          width="100"
-          color="#4fa94d"
-          ariaLabel="rotating-square-loading"
-        />
-        {message && <p>{message}{dots}</p>}
+  if (error) {
+    return <p>Something Went Wrong</p>;
+  }
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-249px-76px)]">
+        <div className="text-center">
+          <RotatingSquare
+            visible={true}
+            height="100"
+            width="100"
+            color="#4fa94d"
+            ariaLabel="rotating-square-loading"
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default Loading;

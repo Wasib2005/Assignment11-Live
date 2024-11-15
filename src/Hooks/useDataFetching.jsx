@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useContext, useEffect } from "react";
+import { LoadingContext } from "../Contexts/LoadingContext";
 
 const useDataFetching = (
   _url,
@@ -7,7 +9,7 @@ const useDataFetching = (
   focusRefetch = false,
   method = "get",
   body = null,
-  main_url = import.meta.env.VITE_DATABASE_URL,
+  main_url = import.meta.env.VITE_DATABASE_URL
 ) => {
   const url = `${main_url}/${_url}`;
 
@@ -17,8 +19,14 @@ const useDataFetching = (
       method,
     };
     if (body) config.data = body;
-    const res = await axios(config);
-    return res.data;
+    try {
+      const res = await axios(config);
+      return res.data;
+    } catch (error) {
+      throw new Error(
+        error.response?.data?.message || "An error occurred while fetching data"
+      );
+    }
   };
 
   const { data, isLoading, error } = useQuery({
@@ -27,6 +35,12 @@ const useDataFetching = (
     refetchOnWindowFocus: focusRefetch,
     refetchInterval: setRefetchInterval,
   });
+  const { setIsLoading, setError } = useContext(LoadingContext);
+
+  useEffect(() => {
+    setIsLoading(isLoading);
+    setError(error);
+  }, [isLoading, error, setIsLoading, setError]);
 
   return { data, isLoading, error };
 };
