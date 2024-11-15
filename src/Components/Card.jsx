@@ -1,11 +1,34 @@
 import PropTypes, { bool } from "prop-types";
+import { useEffect, useState } from "react";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { LuAlarmClock } from "react-icons/lu";
 import { MdCategory } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const Card = ({ food, isRow = true }) => {
+const Card = ({ food, isRow = true, cartList, setCartList }) => {
+  const addToCartListHandle = () => {
+    const existingItem = cartList.find((item) => item.id === food._id);
+
+    if (existingItem) {
+
+      setCartList(
+        cartList.map((item) =>
+          item.id === food._id ? { ...item, quantity: item.quantity + 1 } : item
+        )
+      );
+    } else {
+
+      setCartList([...cartList, { id: food._id, quantity: 1 }]);
+    }
+  };
+
+  useEffect(() => {
+    localStorage.setItem("cartList", JSON.stringify(cartList));
+  }, [cartList]);
+
+  console.log(cartList);
+
   return (
     <div
       className={`border p-6 rounded-xl bg-slate-50 dark:bg-gray-800  gap-2 transition delay-100 duration-700 hover:scale-105 grid ${
@@ -23,7 +46,7 @@ const Card = ({ food, isRow = true }) => {
         <h1 className="font-bold text-3xl">{food?.name}</h1>
         <hr />
         <div className="flex gap-2 items-center">
-        <MdCategory />
+          <MdCategory />
           <p>Category: {food?.category}</p>
         </div>
         <hr />
@@ -66,18 +89,20 @@ const Card = ({ food, isRow = true }) => {
               <span className="relative">Visit Details</span>
             </button>
           </Link>
-          <Link>
-            <button className="relative px-5 py-3 overflow-hidden font-medium text-green-400 bg-green-100 border border-green-200 rounded-lg shadow-inner group">
-              <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-green-400 group-hover:w-full ease" />
-              <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-green-400 group-hover:w-full ease" />
-              <span className="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-green-400 group-hover:h-full ease" />
-              <span className="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-green-400 group-hover:h-full ease" />
-              <span className="absolute inset-0 w-full h-full duration-300 delay-300 green-500 opacity-0 group-hover:opacity-100" />
-              <span className="relative transition-colors duration-300 delay-200 group-hover:text-white ease">
-                Add to card
-              </span>
-            </button>
-          </Link>
+
+          <button
+            onClick={addToCartListHandle}
+            className="relative px-5 py-3 overflow-hidden font-medium text-green-400 bg-green-100 border border-green-200 rounded-lg shadow-inner group"
+          >
+            <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-green-400 group-hover:w-full ease" />
+            <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-green-400 group-hover:w-full ease" />
+            <span className="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-green-400 group-hover:h-full ease" />
+            <span className="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-green-400 group-hover:h-full ease" />
+            <span className="absolute inset-0 w-full h-full duration-300 delay-300 green-500 opacity-0 group-hover:opacity-100" />
+            <span className="relative transition-colors duration-300 delay-200 group-hover:text-white ease">
+              Add to card
+            </span>
+          </button>
         </div>
       </div>
     </div>
@@ -87,6 +112,8 @@ const Card = ({ food, isRow = true }) => {
 Card.propTypes = {
   food: PropTypes.object.isRequired,
   isRow: PropTypes.bool,
+  cartList: PropTypes.array,
+  setCartList: PropTypes.func,
 };
 
 export default Card;

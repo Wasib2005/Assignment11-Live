@@ -16,6 +16,9 @@ const AllFoodPage = () => {
   const [selectedPage, setSelectedPage] = useState(1);
   const [foodData, setFoodData] = useState(null);
   const [rating, setRating] = useState(0);
+  const [cartList, setCartList] = useState(
+    JSON.parse(localStorage.getItem("cartList")) || []
+  );
 
   const { setIsLoading } = useContext(LoadingContext);
 
@@ -61,7 +64,7 @@ const AllFoodPage = () => {
     setSelectedPage(page);
   };
 
-  useEffect(() => FilterFormHandle, [ selectedPage]);
+  useEffect(() => FilterFormHandle, [selectedPage]);
 
   return (
     <div className="text-center mt-10">
@@ -134,9 +137,7 @@ const AllFoodPage = () => {
               </div>
             </div>
 
-            
             <div className="flex justify-between">
-              
               <button
                 type="reset"
                 onClick={FilterFormHandle}
@@ -157,7 +158,13 @@ const AllFoodPage = () => {
             <p>No data available</p>
           ) : (
             foodData?.results?.map((e) => (
-              <Card key={e._id} food={e} isRow={false} />
+              <Card
+                key={e._id}
+                food={e}
+                isRow={false}
+                cartList={cartList}
+                setCartList={setCartList}
+              />
             ))
           )}
         </div>
