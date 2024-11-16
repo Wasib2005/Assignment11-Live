@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import MainPage from "../Pages/MainPage";
 import Home from "../Pages/Home";
 import AllFoodPage from "../Pages/AllFoodPage";
-import UserCard from "../Pages/UserCard";
+import UserCardList from "../Pages/UserCardList";
 
 const MainRouter = createBrowserRouter([
   {
@@ -11,7 +11,7 @@ const MainRouter = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "foods", element: <AllFoodPage /> },
-      { path: "card", element: <UserCard /> },
+      { path: "card", element: <UserCardList /> },
       { path: "myList" },
     ],
   },

@@ -2,7 +2,6 @@ import { FloatingLabel, Pagination, Select } from "flowbite-react";
 import Card from "../Components/Card";
 import useDataFetching from "../Hooks/useDataFetching";
 import { useContext, useEffect, useState } from "react";
-import ReactStars from "react-rating-stars-component";
 import { LoadingContext } from "../Contexts/LoadingContext";
 // import { useQuery } from 'react-query';
 import axios from "axios";
@@ -15,7 +14,6 @@ const AllFoodPage = () => {
 
   const [selectedPage, setSelectedPage] = useState(1);
   const [foodData, setFoodData] = useState(null);
-  const [rating, setRating] = useState(0);
   const [cartList, setCartList] = useState(
     JSON.parse(localStorage.getItem("cartList")) || []
   );
@@ -56,9 +54,6 @@ const AllFoodPage = () => {
     }
   };
 
-  const ratingChanged = (newRating) => {
-    setRating(newRating);
-  };
 
   const paginationHandle = (page) => {
     setSelectedPage(page);

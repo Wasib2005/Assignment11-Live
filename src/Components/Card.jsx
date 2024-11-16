@@ -1,5 +1,5 @@
-import PropTypes, { bool } from "prop-types";
-import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { useEffect } from "react";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { LuAlarmClock } from "react-icons/lu";
@@ -11,14 +11,12 @@ const Card = ({ food, isRow = true, cartList, setCartList }) => {
     const existingItem = cartList.find((item) => item.id === food._id);
 
     if (existingItem) {
-
       setCartList(
         cartList.map((item) =>
           item.id === food._id ? { ...item, quantity: item.quantity + 1 } : item
         )
       );
     } else {
-
       setCartList([...cartList, { id: food._id, quantity: 1 }]);
     }
   };

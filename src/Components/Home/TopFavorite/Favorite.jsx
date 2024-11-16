@@ -1,6 +1,5 @@
 import useDataFetching from "../../../Hooks/useDataFetching";
 import Card from "../../Card";
-import Loading from "../../Loading";
 import { useState } from "react";
 const Favorite = () => {
   const [cartList, setCartList] = useState(
