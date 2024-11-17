@@ -4,23 +4,19 @@ import { MdCategory, MdDeleteForever } from "react-icons/md";
 import { FaMinus, FaMoneyBillWave, FaPlus } from "react-icons/fa";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { LuAlarmClock } from "react-icons/lu";
+import toast from "react-hot-toast";
 
-const UserCard = ({
-  dataLS,
-  setCardDataObj,
-  cardDataObj,
-
-}) => {
+const UserCard = ({ dataLS, setCardDataObj, cardDataObj }) => {
   const { data } = useDataFetching(`foodData?id=${dataLS.id}`);
- 
+
   const removeFromCartList = () => {
     const tempCardObj = [...cardDataObj];
     setCardDataObj(tempCardObj.filter((e) => e.id !== data._id));
+    toast.success("Card Updated");
   };
 
   const quantityHandle = (What) => {
     if (What === "+") {
-
       setCardDataObj(
         cardDataObj.map((e) =>
           e.id === data._id ? { id: e.id, quantity: e.quantity + 1 } : e
@@ -40,8 +36,8 @@ const UserCard = ({
       }
       setCardDataObj(tempList);
     }
+    toast.success("Card Updated");
   };
-
 
   return (
     <div className="md:flex gap-3 justify-between items-center border p-4 rounded-2xl bg-slate-50 dark:bg-slate-700">

@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { FaRegEye } from "react-icons/fa";
 import { RiEyeCloseLine } from "react-icons/ri";
 import AuthProviderComponent from "../AuthProviderComponent";
+import EmailAuth from "../../../Utilities/LogInOut/EmailAuth";
+import toast from "react-hot-toast";
 
-const SingUpForSingUp = ({ singInSingUpHandle }) => {
+const SingUpForSingUp = ({ singIn }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = () => {
@@ -19,10 +21,6 @@ const SingUpForSingUp = ({ singInSingUpHandle }) => {
     }
   };
 
-  const showError = (where, what = "") => {
-    document.getElementById(where).innerText = what;
-  };
-
   const handleSingIn = (e) => {
     e.preventDefault();
     const usrForm = e.target;
@@ -30,40 +28,45 @@ const SingUpForSingUp = ({ singInSingUpHandle }) => {
     const userEmail = usrForm.email.value;
     const userPassword = usrForm.password.value;
     const userConformPassword = usrForm.ConformPassword.value;
-    console.log(userName, userPassword, userEmail, userPassword.length);
-    const passwordLength = 10;
-    if (userPassword.length <= passwordLength) {
-      showError(
-        "PasswordError",
-        `The password must be more then ${passwordLength}`
+
+    const passwordMinLength = 10;
+
+    if (userPassword.length < passwordMinLength) {
+      toast.error(
+        `The password must be at least ${passwordMinLength} characters long.`
       );
-      return;
-    } else if (userPassword === userConformPassword) {
-      showError("PasswordError", "");
-    } else if (!/[0-9]/.test(userPassword)) {
-      showError("PasswordError", "You have to use at least one digit (0-9)");
-    } else if (!/[A-Z]/.test(userPassword)) {
-      showError(
-        "PasswordError",
-        "You have to use at least one uppercase  (A-Z)"
-      );
-    } else if (!/[a-z]/.test(userPassword)) {
-      showError(
-        "PasswordError",
-        "You have to use at least one lowercase  (a-z)"
-      );
-    } else if (!/[@#$%^&*(){}+-=?<>,.`~']/.test(userPassword)) {
-      showError(
-        "PasswordError",
-        "You have to use at least one special character  (@#$%^&*+)"
-      );
-    } else if (userPassword !== userConformPassword) {
-      showError("PasswordError", "The passwords don't match");
       return;
     }
-    console.log(userPassword.split("").includes(""));
+    if (!/[0-9]/.test(userPassword)) {
+      toast.error("The password must include at least one digit (0-9).");
+      return;
+    }
+    if (!/[A-Z]/.test(userPassword)) {
+      toast.error(
+        "The password must include at least one uppercase letter (A-Z)."
+      );
+      return;
+    }
+    if (!/[a-z]/.test(userPassword)) {
+      toast.error(
+        "The password must include at least one lowercase letter (a-z)."
+      );
+      return;
+    }
+    if (!/[@#$%^&*(){}+\-=?<>,.`~']/.test(userPassword)) {
+      toast.error(
+        "The password must include at least one special character (@#$%^&*+)."
+      );
+      return;
+    }
+    if (userPassword !== userConformPassword) {
+      toast.error("The passwords do not match.");
+      return;
+    }
 
-    // here
+    console.log(userName, userPassword, userEmail, userPassword.length);
+
+    EmailAuth(singIn, userEmail, userPassword, userName);
   };
 
   return (
@@ -157,7 +160,7 @@ const SingUpForSingUp = ({ singInSingUpHandle }) => {
 };
 
 SingUpForSingUp.propTypes = {
-  singInSingUpHandle: PropTypes.func.isRequired,
+  singIn: PropTypes.bool.isRequired,
 };
 
 export default SingUpForSingUp;

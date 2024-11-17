@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import { RiEyeCloseLine } from "react-icons/ri";
 import AuthProviderComponent from "../AuthProviderComponent";
 import { FaRegEye } from "react-icons/fa";
+import EmailAuth from "../../../Utilities/LogInOut/EmailAuth";
 
-const SingInForSingIn = ({ singInSingUpHandle }) => {
+const SingInForSingIn = ({ singInSingUpHandle, singIn }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = () => {
@@ -23,6 +24,7 @@ const SingInForSingIn = ({ singInSingUpHandle }) => {
     const userEmail = usrForm.email.value;
     const userPassword = usrForm.password.value;
     console.log(userPassword, userEmail);
+    EmailAuth(singIn, userEmail, userPassword);
   };
 
   return (
@@ -90,6 +92,7 @@ const SingInForSingIn = ({ singInSingUpHandle }) => {
 };
 SingInForSingIn.propTypes = {
   singInSingUpHandle: PropTypes.func.isRequired,
+  singIn: PropTypes.bool.isRequired,
 };
 
 export default SingInForSingIn;

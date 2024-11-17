@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { LuAlarmClock } from "react-icons/lu";
@@ -19,6 +20,7 @@ const Card = ({ food, isRow = true, cartList, setCartList }) => {
     } else {
       setCartList([...cartList, { id: food._id, quantity: 1 }]);
     }
+    toast.success(`${food?.name} added`);
   };
 
   useEffect(() => {
