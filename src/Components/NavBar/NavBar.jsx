@@ -1,4 +1,4 @@
-import { DarkThemeToggle } from "flowbite-react";
+import { Avatar, DarkThemeToggle, Dropdown } from "flowbite-react";
 import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { HiMenu, HiX } from "react-icons/hi"; // Menu and close icons
@@ -8,8 +8,7 @@ const NavBar = () => {
   const [isUserOwner, setIsUserOwner] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const {user}=useContext(AuthContext)
-
+  const { user } = useContext(AuthContext);
 
   const navLinkClass = ({ isActive }) =>
     `w-full md:w-[130px] p-1 md:p-3 md:rounded-lg ${
@@ -89,14 +88,40 @@ const NavBar = () => {
 
           {/* Sign Up Button for Small Screens (Dropdown) */}
           <div className="hidden md:inline">
-            <Link to={"/sing-in-sing-up"} onClick={() => setIsUserOwner(!isUserOwner)}>
-              <button className="w-[100px] rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-blue-600 text-blue-600 text-white">
-                <span className="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-blue-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease" />
-                <span className="relative text-blue-600 transition duration-300 group-hover:text-white ease">
-                  Sing Up
-                </span>
-              </button>
-            </Link>
+            {user ? (
+              <>
+                <Dropdown
+                  arrowIcon={false}
+                  inline
+                  label={
+                    <Avatar alt="User settings" img={user?.photoURL} rounded />
+                  }
+                >
+                  <Dropdown.Header>
+                    <span className="block text-sm">{user?.displayName}</span>
+                    <span className="block truncate text-sm font-medium">
+                      {user?.email}
+                    </span>
+                  </Dropdown.Header>
+                  <Dropdown.Item>Dashboard</Dropdown.Item>
+                  <Dropdown.Item>Settings</Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item>Sign out</Dropdown.Item>
+                </Dropdown>
+              </>
+            ) : (
+              <Link
+                to={"/sing-in-sing-up"}
+                onClick={() => setIsUserOwner(!isUserOwner)}
+              >
+                <button className="w-[100px] rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-blue-600 text-blue-600 text-white">
+                  <span className="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-blue-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease" />
+                  <span className="relative text-blue-600 transition duration-300 group-hover:text-white ease">
+                    Sing Up
+                  </span>
+                </button>
+              </Link>
+            )}
           </div>
 
           {/* Toggle Menu Icon */}
@@ -111,20 +136,35 @@ const NavBar = () => {
 
         {/* Dropdown Menu - Mobile and Medium Devices */}
         {isMenuOpen && (
-          <div className="absolute top-full left-0 w-full bg-white dark:bg-slate-900 shadow-lg transition-transform duration-300 ease-in-out transform origin-top z-10 lg:hidden">
-            <ul className="flex flex-col items-center p-4 space-y-2">
+          <div className=" absolute top-full left-0 w-full bg-white dark:bg-slate-900 shadow-lg transition-transform duration-300 ease-in-out transform origin-top z-10 lg:hidden">
+            <ul className="justify-start  items-center p-4 space-y-2">
+              {user ? (
+                <li className="flex items-center  gap-3 md:hidden">
+                  <Avatar img={user?.photoURL} rounded />
+                  <div>
+                    <p>{user?.displayName}</p>
+                    <p>{user?.email}</p>
+                  </div>
+                </li>
+              ) : (
+                <></>
+              )}
               {navLinks}
-              {/* Add Sign Up Button inside the dropdown */}
-              <li className="md:hidden">
-                <Link to={"/sing-in-sing-up"} onClick={() => setIsUserOwner(!isUserOwner)}>
-                  <button className=" rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-blue-600 text-blue-600 text-white">
+              {user ? (
+                <></>
+              ) : (
+                <Link
+                  to={"/sing-in-sing-up"}
+                  onClick={() => setIsUserOwner(!isUserOwner)}
+                >
+                  <button className="w-[100px] rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-blue-600 text-blue-600 text-white">
                     <span className="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-blue-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease" />
                     <span className="relative text-blue-600 transition duration-300 group-hover:text-white ease">
                       Sing Up
                     </span>
                   </button>
                 </Link>
-              </li>
+              )}
             </ul>
           </div>
         )}
