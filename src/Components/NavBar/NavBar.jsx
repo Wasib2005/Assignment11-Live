@@ -1,11 +1,15 @@
 import { DarkThemeToggle } from "flowbite-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { HiMenu, HiX } from "react-icons/hi"; // Menu and close icons
+import { AuthContext } from "../../Contexts/AuthContext";
 
 const NavBar = () => {
   const [isUserOwner, setIsUserOwner] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const {user}=useContext(AuthContext)
+
 
   const navLinkClass = ({ isActive }) =>
     `w-full md:w-[130px] p-1 md:p-3 md:rounded-lg ${
@@ -85,7 +89,7 @@ const NavBar = () => {
 
           {/* Sign Up Button for Small Screens (Dropdown) */}
           <div className="hidden md:inline">
-            <Link onClick={() => setIsUserOwner(!isUserOwner)}>
+            <Link to={"/sing-in-sing-up"} onClick={() => setIsUserOwner(!isUserOwner)}>
               <button className="w-[100px] rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-blue-600 text-blue-600 text-white">
                 <span className="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-blue-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease" />
                 <span className="relative text-blue-600 transition duration-300 group-hover:text-white ease">
@@ -112,7 +116,7 @@ const NavBar = () => {
               {navLinks}
               {/* Add Sign Up Button inside the dropdown */}
               <li className="md:hidden">
-                <Link onClick={() => setIsUserOwner(!isUserOwner)}>
+                <Link to={"/sing-in-sing-up"} onClick={() => setIsUserOwner(!isUserOwner)}>
                   <button className=" rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-blue-600 text-blue-600 text-white">
                     <span className="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-blue-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease" />
                     <span className="relative text-blue-600 transition duration-300 group-hover:text-white ease">
