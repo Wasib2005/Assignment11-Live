@@ -3,12 +3,13 @@ import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { HiMenu, HiX } from "react-icons/hi"; // Menu and close icons
 import { AuthContext } from "../../Contexts/AuthContext";
+import LogOut from "../../Utilities/LogInOut/LogOut";
+import axios from "axios";
 
 const NavBar = () => {
-  const [isUserOwner, setIsUserOwner] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const { user } = useContext(AuthContext);
+  const { user, isUserOwner } = useContext(AuthContext);
 
   const navLinkClass = ({ isActive }) =>
     `w-full md:w-[130px] p-1 md:p-3 md:rounded-lg ${
@@ -50,7 +51,7 @@ const NavBar = () => {
           </li>
           <li className="p-4">
             <NavLink to="/upload-foods" className={navLinkClass}>
-              Upload Foods
+              Add/Edit Foods
             </NavLink>
           </li>
         </>
@@ -106,14 +107,11 @@ const NavBar = () => {
                   <Dropdown.Item>Dashboard</Dropdown.Item>
                   <Dropdown.Item>Settings</Dropdown.Item>
                   <Dropdown.Divider />
-                  <Dropdown.Item>Sign out</Dropdown.Item>
+                  <Dropdown.Item onClick={LogOut}>Sign out</Dropdown.Item>
                 </Dropdown>
               </>
             ) : (
-              <Link
-                to={"/sing-in-sing-up"}
-                onClick={() => setIsUserOwner(!isUserOwner)}
-              >
+              <Link to={"/sing-in-sing-up"}>
                 <button className="w-[100px] rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-blue-600 text-blue-600 text-white">
                   <span className="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-blue-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease" />
                   <span className="relative text-blue-600 transition duration-300 group-hover:text-white ease">
@@ -153,10 +151,7 @@ const NavBar = () => {
               {user ? (
                 <></>
               ) : (
-                <Link
-                  to={"/sing-in-sing-up"}
-                  onClick={() => setIsUserOwner(!isUserOwner)}
-                >
+                <Link to={"/sing-in-sing-up"}>
                   <button className="w-[100px] rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-blue-600 text-blue-600 text-white">
                     <span className="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-blue-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease" />
                     <span className="relative text-blue-600 transition duration-300 group-hover:text-white ease">

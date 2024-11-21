@@ -5,14 +5,32 @@ import { FaMinus, FaMoneyBillWave, FaPlus } from "react-icons/fa";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { LuAlarmClock } from "react-icons/lu";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const UserCard = ({ dataLS, setCardDataObj, cardDataObj }) => {
   const { data } = useDataFetching(`foodData?id=${dataLS.id}`);
 
   const removeFromCartList = () => {
-    const tempCardObj = [...cardDataObj];
-    setCardDataObj(tempCardObj.filter((e) => e.id !== data._id));
-    toast.success("Card Updated");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const tempCardObj = [...cardDataObj];
+        setCardDataObj(tempCardObj.filter((e) => e.id !== data._id));
+        toast.success("Card Updated");
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
   };
 
   const quantityHandle = (What) => {
@@ -29,6 +47,7 @@ const UserCard = ({ dataLS, setCardDataObj, cardDataObj }) => {
         if (element.id === data._id) {
           element.quantity -= 1;
           if (element.quantity === 0) {
+            console.log(153456)
             continue;
           }
         }

@@ -1,16 +1,22 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserCard from "../Components/UserCard/UserCard";
 import axios from "axios";
-import { data } from "autoprefixer";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Contexts/AuthContext";
+import toast from "react-hot-toast";
 
 const UserCardList = () => {
   const [cardDataObj, setCardDataObj] = useState(
     JSON.parse(localStorage.getItem("cartList")) || []
   );
 
+  const { user } = useContext(AuthContext);
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [databasePrice, setDataBasePrice] = useState([]);
+
+  const navigate = useNavigate();
 
   console.log(cardDataObj, databasePrice);
 
@@ -31,6 +37,48 @@ const UserCardList = () => {
     }
     setTotalPrice(tempTotalPrice);
     setTotalQuantity(tempTotalQuantity);
+  };
+
+  const checkOutHandle = () => {
+    if (cardDataObj.length === 0) {
+      toast.error("No data");
+    } else if (!user && cardDataObj.length > 0) {
+      Swal.fire({
+        title:
+          "Do you want to save the check out?\nPlace create an account for tracking your orders.",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Create Account",
+        denyButtonText: `Don't Create Account`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          navigate("/sing-in-sing-up");
+        } else if (result.isDenied) {
+          Swal.fire("Orders Placed!", "", "success")
+            .then(localStorage.removeItem("cartList"))
+            .then(setCardDataObj([]));
+        }
+      });
+    } else if (cardDataObj.length > 0) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+
+        confirmButtonText: "Conform!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success",
+          });
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -73,7 +121,7 @@ const UserCardList = () => {
         </div>
         <div className="w-1/4 flex justify-end">
           <button
-            href="#_"
+            onClick={checkOutHandle}
             className="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group"
           >
             <span className="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-indigo-600 group-hover:h-full" />

@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 const EmailAuth = (singIn, userEmail, userPassword, userName) => {
   if (singIn) {
     signInWithEmailAndPassword(auth, userEmail, userPassword).then(
-      toast.success(`Welcome back ${auth.currentUser.displayName}`)
+      toast.success(`Welcome back ${auth.currentUser?.displayName}`)
     );
   } else {
     createUserWithEmailAndPassword(auth, userEmail, userPassword)

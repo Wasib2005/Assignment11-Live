@@ -1,9 +1,4 @@
-import {
-  FaFacebookF,
-  FaGithubSquare,
-  FaGoogle,
-
-} from "react-icons/fa";
+import { FaFacebookF, FaGithubSquare, FaGoogle } from "react-icons/fa";
 import { ThirdPartyProviders } from "../../Utilities/LogInOut/ThirdPartyProviders";
 import { GoogleProvider } from "../../Utilities/LogInOut/ThirdPartyAuthProviders/GoogleAuth";
 const AuthProviderComponent = () => {
@@ -12,7 +7,10 @@ const AuthProviderComponent = () => {
       <div className="flex items-center border rounded-full p-3 hover:bg-blue-200 ">
         <FaFacebookF size={35} />
       </div>
-      <div onClick={()=>ThirdPartyProviders(GoogleProvider)} className="flex items-center border rounded-full p-3 hover:bg-blue-200 ">
+      <div
+        onClick={() => ThirdPartyProviders(GoogleProvider, "google")}
+        className="flex items-center border rounded-full p-3 hover:bg-blue-200 "
+      >
         <FaGoogle size={35} />
       </div>
       <div className="flex items-center border rounded-full p-3 hover:bg-blue-200 ">
