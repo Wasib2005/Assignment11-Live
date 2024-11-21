@@ -6,6 +6,7 @@ import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { LuAlarmClock } from "react-icons/lu";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const UserCard = ({ dataLS, setCardDataObj, cardDataObj }) => {
   const { data } = useDataFetching(`foodData?id=${dataLS.id}`);
@@ -47,7 +48,7 @@ const UserCard = ({ dataLS, setCardDataObj, cardDataObj }) => {
         if (element.id === data._id) {
           element.quantity -= 1;
           if (element.quantity === 0) {
-            console.log(153456)
+            console.log(153456);
             continue;
           }
         }
@@ -58,16 +59,26 @@ const UserCard = ({ dataLS, setCardDataObj, cardDataObj }) => {
     toast.success("Card Updated");
   };
 
+  const navigate = useNavigate();
+
+  if (!data) return;
+
   return (
-    <div className="md:flex gap-3 justify-between items-center border p-4 rounded-2xl bg-slate-50 dark:bg-slate-700">
-      <div>
+    <div className="md:flex gap-3 justify-between items-center border p-4 rounded-2xl bg-slate-50 dark:bg-slate-700 ">
+      <div
+        onClick={() => navigate(`/details/${data?._id}`)}
+        className="cursor-pointer"
+      >
         <img
           src={data?.image["1:1"]}
           alt=""
           className="border rounded-xl  w-[150px] h-[150px]"
         />
       </div>
-      <div>
+      <div
+        onClick={() => navigate(`/details/${data?._id}`)}
+        className="cursor-pointer"
+      >
         <h1 className="font-bold md:text-3xl">{data?.name}</h1>
         <p>Product ID: {data?._id.toUpperCase()}</p>
         <div className="flex gap-2 items-center">
@@ -109,7 +120,7 @@ const UserCard = ({ dataLS, setCardDataObj, cardDataObj }) => {
         </div>
         <button
           onClick={removeFromCartList}
-          className="relative inline-flex  items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium text-red-700 transition duration-300 ease-out border-2 border-red-700 rounded-xl shadow-md group"
+          className="z-50 relative inline-flex  items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium text-red-700 transition duration-300 ease-out border-2 border-red-700 rounded-xl shadow-md group"
         >
           <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-red-700 group-hover:translate-x-0 ease">
             <svg

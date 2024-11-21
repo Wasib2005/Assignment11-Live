@@ -12,7 +12,7 @@ const Banner = ({ data }) => {
             {data.name}
           </h1>
           <p className=" text-sm md:text-xl lg:text-2xl w-4/5 md:w-3/4">
-            {data.description}
+            {data.description.slice(0,70)}...
           </p>
           <div className="md:flex gap-3 hidden">
             <p className="flex items-center gap-1">

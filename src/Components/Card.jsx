@@ -14,7 +14,9 @@ const Card = ({ food, isRow = true, cartList, setCartList }) => {
     if (existingItem) {
       setCartList(
         cartList.map((item) =>
-          item?.id === food?._id ? { ...item, quantity: item?.quantity + 1 } : item
+          item?.id === food?._id
+            ? { ...item, quantity: item?.quantity + 1 }
+            : item
         )
       );
     } else {
@@ -35,14 +37,14 @@ const Card = ({ food, isRow = true, cartList, setCartList }) => {
         isRow ? " lg:grid " : " lg:flex "
       }`}
     >
-      <div className="lg:w-[40%]">
+      <div className={!isRow && "lg:w-[40%]"}>
         <img
           src={food?.image["16:9"]}
           alt={food?.name}
           className="border rounded-xl md:w-[393.333px] md:h-[262.217px]"
         />
       </div>
-      <div className="grid pl-4 gap-2 lg:w-[60%] text-left">
+      <div className={`grid pl-4 gap-2 ${!isRow&&"lg:w-[60%]"} text-left`}>
         <h1 className="font-bold text-3xl">{food?.name}</h1>
         <hr />
         <div className="flex gap-2 items-center">
@@ -50,7 +52,7 @@ const Card = ({ food, isRow = true, cartList, setCartList }) => {
           <p>Category: {food?.category}</p>
         </div>
         <hr />
-        <p>{food?.description.slice(0,115)}...</p>
+        <p>{food?.description.slice(0, 115)}...</p>
         <hr />
         <div className="flex items-center gap-4">
           <p className="flex items-center gap-1">
@@ -67,8 +69,7 @@ const Card = ({ food, isRow = true, cartList, setCartList }) => {
           </p>
         </div>
         <div className="mt-2 gap-2 flex">
-          <Link
-          to={`/details/${food._id}`}>
+          <Link to={`/details/${food._id}`}>
             <button className=" relative inline-flex items-center px-8 py-3 overflow-hidden text-lg font-medium text-green-500 border-2 border-green-500 rounded-xl hover:text-white group hover:bg-gray-50">
               <span className="absolute left-0 block w-full h-0 transition-all bg-green-500 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease" />
               <span className="absolute right-0 flex items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">

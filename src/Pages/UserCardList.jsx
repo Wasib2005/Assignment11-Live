@@ -114,12 +114,12 @@ const UserCardList = () => {
           <p>No Data</p>
         )}
       </div>
-      <div className="flex justify-around text-2xl font-semibold items-center">
+      <div className="md:flex justify-around text-2xl font-semibold items-center">
         <div className="md:flex w-full justify-around">
           <p>Total Quantity: {totalQuantity}</p>
           <p>Total Price: {totalPrice.toFixed(2)}</p>
         </div>
-        <div className="w-1/4 flex justify-end">
+        <div className="md:w-1/4 flex justify-center md:justify-end">
           <button
             onClick={checkOutHandle}
             className="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group"
@@ -157,7 +157,7 @@ const UserCardList = () => {
                 />
               </svg>
             </span>
-            <span className="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white">
+            <span className="text-base md:text-lg lg:text-2xl font-bold relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white">
               Check Out
             </span>
           </button>
