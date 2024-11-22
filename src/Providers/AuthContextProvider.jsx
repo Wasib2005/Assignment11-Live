@@ -20,7 +20,7 @@ const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
+
       setIsUserOwner(false);
       clearCookie();
       setUser(currentUser);

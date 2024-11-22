@@ -8,9 +8,7 @@ const UserLog = () => {
   const [singIn, setSingIn] = useState(true);
   const singInSingUpHandle = () => {
     setSingIn(!singIn);
-    console.log(singIn);
   };
-  console.log(singIn);
 
   return (
     <>

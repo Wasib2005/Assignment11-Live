@@ -1,13 +1,24 @@
 import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { LuAlarmClock } from "react-icons/lu";
 import { MdCategory } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Contexts/AuthContext";
+import DeleteFromDB from "../Utilities/Common/DeleteFromDB";
 
-const Card = ({ food, isRow = true, cartList, setCartList }) => {
+const Card = ({
+  food,
+  foods,
+  setFoods,
+  isRow = true,
+  cartList,
+  setCartList,
+}) => {
+  console.log(foods)
+  const { isUserOwner } = useContext(AuthContext);
   const addToCartListHandle = () => {
     const existingItem = cartList.find((item) => item?.id === food?._id);
 
@@ -29,22 +40,24 @@ const Card = ({ food, isRow = true, cartList, setCartList }) => {
     localStorage.setItem("cartList", JSON.stringify(cartList));
   }, [cartList]);
 
-  console.log(cartList);
-
   return (
     <div
       className={`border p-6 rounded-xl bg-slate-50 dark:bg-gray-800  gap-2 transition delay-100 duration-700 hover:scale-105 grid ${
         isRow ? " lg:grid " : " lg:flex "
       }`}
     >
-      <div className={!isRow && "lg:w-[40%]"}>
+      <div className={!isRow ? " lg:grid " : " lg:flex "}>
         <img
           src={food?.image["16:9"]}
           alt={food?.name}
           className="border rounded-xl md:w-[393.333px] md:h-[262.217px]"
         />
       </div>
-      <div className={`grid pl-4 gap-2 ${!isRow&&"lg:w-[60%]"} text-left`}>
+      <div
+        className={`grid pl-4 gap-2 ${
+          !isRow ? " lg:grid " : " lg:flex "
+        } text-left`}
+      >
         <h1 className="font-bold text-3xl">{food?.name}</h1>
         <hr />
         <div className="flex gap-2 items-center">
@@ -92,19 +105,35 @@ const Card = ({ food, isRow = true, cartList, setCartList }) => {
             </button>
           </Link>
 
-          <button
-            onClick={addToCartListHandle}
-            className="relative px-5 py-1 overflow-hidden font-medium text-green-400 bg-green-100 border border-green-200 rounded-lg shadow-inner group"
-          >
-            <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-green-400 group-hover:w-full ease" />
-            <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-green-400 group-hover:w-full ease" />
-            <span className="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-green-400 group-hover:h-full ease" />
-            <span className="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-green-400 group-hover:h-full ease" />
-            <span className="absolute inset-0 w-full h-full duration-300 delay-300 green-500 opacity-0 group-hover:opacity-100" />
-            <span className="relative transition-colors duration-300 delay-200 group-hover:text-white ease">
-              Add to card
-            </span>
-          </button>
+          {!isUserOwner ? (
+            <button
+              onClick={addToCartListHandle}
+              className="relative px-5 py-1 overflow-hidden font-medium text-green-400 bg-green-100 border border-green-200 rounded-lg shadow-inner group"
+            >
+              <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-green-400 group-hover:w-full ease" />
+              <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-green-400 group-hover:w-full ease" />
+              <span className="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-green-400 group-hover:h-full ease" />
+              <span className="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-green-400 group-hover:h-full ease" />
+              <span className="absolute inset-0 w-full h-full duration-300 delay-300 green-500 opacity-0 group-hover:opacity-100" />
+              <span className="relative transition-colors duration-300 delay-200 group-hover:text-white ease">
+                Add to card
+              </span>
+            </button>
+          ) : (
+            <button
+              onClick={() => DeleteFromDB(food?._id, foods, setFoods)}
+              className="relative px-5 py-1 overflow-hidden font-medium text-red-600 bg-red-100 border border-red-300 rounded-lg shadow-inner group"
+            >
+              <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-red-600 group-hover:w-full ease" />
+              <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-red-600 group-hover:w-full ease" />
+              <span className="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-red-600 group-hover:h-full ease" />
+              <span className="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-red-600 group-hover:h-full ease" />
+              <span className="absolute inset-0 w-full h-full duration-300 delay-300 green-500 opacity-0 group-hover:opacity-100" />
+              <span className="relative transition-colors duration-300 delay-200 group-hover:text-white ease">
+                Delete
+              </span>
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -112,10 +141,12 @@ const Card = ({ food, isRow = true, cartList, setCartList }) => {
 };
 
 Card.propTypes = {
-  food: PropTypes.object.isRequired,
+  food: PropTypes.object,
   isRow: PropTypes.bool,
   cartList: PropTypes.array,
+  foods: PropTypes.array,
   setCartList: PropTypes.func,
+  setFoods: PropTypes.func,
 };
 
 export default Card;

@@ -64,7 +64,6 @@ const SingUpForSingUp = ({ singIn }) => {
       return;
     }
 
-    console.log(userName, userPassword, userEmail, userPassword.length);
 
     EmailAuth(singIn, userEmail, userPassword, userName);
   };

@@ -18,8 +18,6 @@ const UserCardList = () => {
 
   const navigate = useNavigate();
 
-  console.log(cardDataObj, databasePrice);
-
   const getPrice = async () => {
     const res = await axios.post(
       `${import.meta.env.VITE_DATABASE_URL}/onlyPrice`,

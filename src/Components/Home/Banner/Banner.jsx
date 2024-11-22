@@ -3,7 +3,6 @@ import { FaStar } from "react-icons/fa";
 import { LuAlarmClock } from "react-icons/lu";
 
 const Banner = ({ data }) => {
-  console.log(data.image["16:9"] || data.image["1:1"]);
   return (
     <div>
       <div className="relative w-[400px] md:w-[780px] lg:w-[1280px] m-auto rounded-xl">
@@ -12,7 +11,7 @@ const Banner = ({ data }) => {
             {data.name}
           </h1>
           <p className=" text-sm md:text-xl lg:text-2xl w-4/5 md:w-3/4">
-            {data.description.slice(0,70)}...
+            {data.description.slice(0, 70)}...
           </p>
           <div className="md:flex gap-3 hidden">
             <p className="flex items-center gap-1">
@@ -24,9 +23,7 @@ const Banner = ({ data }) => {
               <span>{data.cookingTime}</span>
             </p>
           </div>
-          <button
-            className="text-sm md:text-base relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-green-500 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group w-[45%] md:w-1/4 lg:w-1/6"
-          >
+          <button className="text-sm md:text-base relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-green-500 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group w-[45%] md:w-1/4 lg:w-1/6">
             <span className="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-green-500 group-hover:h-full" />
             <span className="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
               <svg

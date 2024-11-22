@@ -4,7 +4,6 @@ import { Link, NavLink } from "react-router-dom";
 import { HiMenu, HiX } from "react-icons/hi"; // Menu and close icons
 import { AuthContext } from "../../Contexts/AuthContext";
 import LogOut from "../../Utilities/LogInOut/LogOut";
-import axios from "axios";
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,7 +29,8 @@ const NavBar = () => {
           Foods
         </NavLink>
       </li>
-      {!isUserOwner && (
+
+      {!isUserOwner && user && (
         <li className="p-4">
           <NavLink to="/card" className={navLinkClass}>
             Card
@@ -42,6 +42,13 @@ const NavBar = () => {
           Foods Gallery
         </NavLink>
       </li>
+      {!isUserOwner && (
+        <li className="p-4">
+          <NavLink to="/order" className={navLinkClass}>
+            Order
+          </NavLink>
+        </li>
+      )}
       {isUserOwner && (
         <>
           <li className="p-4">
@@ -134,7 +141,7 @@ const NavBar = () => {
 
         {/* Dropdown Menu - Mobile and Medium Devices */}
         {isMenuOpen && (
-          <div className=" absolute top-full left-0 w-full bg-white dark:bg-slate-900 shadow-lg transition-transform duration-300 ease-in-out transform origin-top z-10 lg:hidden">
+          <div className=" absolute top-full left-0 w-full bg-white dark:bg-slate-900 shadow-lg transition-transform duration-300 ease-in-out transform origin-top z-10 lg:hidden ">
             <ul className="justify-start  items-center p-4 space-y-2">
               {user ? (
                 <li className="flex items-center  gap-3 md:hidden">

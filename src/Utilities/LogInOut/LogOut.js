@@ -5,7 +5,6 @@ import axios from "axios";
 const LogOut = () => {
   signOut(auth)
     .then(() => {
-      console.log("sign out successfully");
       axios
         .post(
           `${import.meta.env.VITE_DATABASE_URL}/logout`,

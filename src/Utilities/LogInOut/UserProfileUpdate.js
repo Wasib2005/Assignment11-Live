@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import UserCreateInDatabase from "./UserCreateInDatabase";
 
 const UserProfileUpdate = (userData, sing_up) => {
-  console.log(1);
+
   updateProfile(auth.currentUser, userData)
     .then(() => {
       UserCreateInDatabase(

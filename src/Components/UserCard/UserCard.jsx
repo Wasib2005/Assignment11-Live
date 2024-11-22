@@ -48,7 +48,6 @@ const UserCard = ({ dataLS, setCardDataObj, cardDataObj }) => {
         if (element.id === data._id) {
           element.quantity -= 1;
           if (element.quantity === 0) {
-            console.log(153456);
             continue;
           }
         }

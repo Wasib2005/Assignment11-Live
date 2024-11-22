@@ -23,7 +23,6 @@ const SingInForSingIn = ({ singInSingUpHandle, singIn }) => {
     const usrForm = e.target;
     const userEmail = usrForm.email.value;
     const userPassword = usrForm.password.value;
-    console.log(userPassword, userEmail);
     EmailAuth(singIn, userEmail, userPassword);
   };
 

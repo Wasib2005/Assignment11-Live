@@ -14,6 +14,7 @@ const AllFoodPage = () => {
 
   const [selectedPage, setSelectedPage] = useState(1);
   const [foodData, setFoodData] = useState(null);
+  const [foods, setFoods] = useState(null);
   const [cartList, setCartList] = useState(
     JSON.parse(localStorage.getItem("cartList")) || []
   );
@@ -54,10 +55,11 @@ const AllFoodPage = () => {
     }
   };
 
-
   const paginationHandle = (page) => {
     setSelectedPage(page);
   };
+
+  useEffect(() => setFoods(foodData?.results), [foodData]);
 
   useEffect(() => FilterFormHandle, [selectedPage]);
 
@@ -149,13 +151,15 @@ const AllFoodPage = () => {
 
         {/* Food Data Display */}
         <div className="grid md:grid-cols-2 lg:grid-cols-1 gap-4">
-          {foodData && foodData.length === 0 ? (
+          {foods && foods.length === 0 ? (
             <p>No data available</p>
           ) : (
-            foodData?.results?.map((e) => (
+            foods?.map((e) => (
               <Card
                 key={e._id}
                 food={e}
+                foods={foods}
+                setFoods={setFoods}
                 isRow={false}
                 cartList={cartList}
                 setCartList={setCartList}

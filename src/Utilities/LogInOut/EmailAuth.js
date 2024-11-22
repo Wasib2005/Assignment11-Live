@@ -21,7 +21,6 @@ const EmailAuth = (singIn, userEmail, userPassword, userName) => {
         toast.error("Failed to create an account. Please try again.");
       });
   }
-  console.log(auth.currentUser);
   return;
 };
 
