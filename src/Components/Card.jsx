@@ -17,7 +17,6 @@ const Card = ({
   cartList,
   setCartList,
 }) => {
-  console.log(foods)
   const { isUserOwner } = useContext(AuthContext);
   const addToCartListHandle = () => {
     const existingItem = cartList.find((item) => item?.id === food?._id);
@@ -55,7 +54,7 @@ const Card = ({
       </div>
       <div
         className={`grid pl-4 gap-2 ${
-          !isRow ? " lg:grid " : " lg:flex "
+          !isRow ? " lg:grid " : " flex "
         } text-left`}
       >
         <h1 className="font-bold text-3xl">{food?.name}</h1>
@@ -81,7 +80,7 @@ const Card = ({
             <span>{food?.cookingTime} minutes</span>
           </p>
         </div>
-        <div className="mt-2 gap-2 flex">
+        <div className="mt-2 gap-2 flex ml-6">
           <Link to={`/details/${food._id}`}>
             <button className=" relative inline-flex items-center px-8 py-3 overflow-hidden text-lg font-medium text-green-500 border-2 border-green-500 rounded-xl hover:text-white group hover:bg-gray-50">
               <span className="absolute left-0 block w-full h-0 transition-all bg-green-500 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease" />

@@ -2,8 +2,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 const DeleteFromDB = (id, foods, setFoods) => {
-  console.log(id);
-  console.log(foods);
+
 
   Swal.fire({
     title: "Are you sure?",

@@ -156,7 +156,7 @@ const AllFoodPage = () => {
           ) : (
             foods?.map((e) => (
               <Card
-                key={e._id}
+                key={`AllFood${e._id}`}
                 food={e}
                 foods={foods}
                 setFoods={setFoods}

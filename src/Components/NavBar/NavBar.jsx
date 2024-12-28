@@ -30,7 +30,7 @@ const NavBar = () => {
         </NavLink>
       </li>
 
-      {!isUserOwner && user && (
+      {!isUserOwner && (
         <li className="p-4">
           <NavLink to="/card" className={navLinkClass}>
             Card
@@ -42,7 +42,7 @@ const NavBar = () => {
           Foods Gallery
         </NavLink>
       </li>
-      {!isUserOwner && (
+      {(!isUserOwner && user) && (
         <li className="p-4">
           <NavLink to="/order" className={navLinkClass}>
             Order

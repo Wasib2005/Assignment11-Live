@@ -6,6 +6,7 @@ import UserCardList from "../Pages/UserCardList";
 import UserLog from "../Pages/UserLog";
 import UploadFoods from "../Pages/UploadFoods";
 import FoodDetails from "../Pages/FoodDetails";
+import UserOrders from "../Pages/UserOrders";
 
 const MainRouter = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const MainRouter = createBrowserRouter([
       { path: "myList" },
       { path: "sing-in-sing-up", element: <UserLog /> },
       { path: "details/:foodId", element: <FoodDetails /> },
+      { path: "/order", element: <UserOrders /> },
     ],
   },
 ]);

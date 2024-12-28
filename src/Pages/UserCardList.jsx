@@ -38,6 +38,9 @@ const UserCardList = () => {
   };
 
   const checkOutHandle = () => {
+    console.log();
+    console.log(user?.email, cardDataObj);
+
     if (cardDataObj.length === 0) {
       toast.error("No data");
     } else if (!user && cardDataObj.length > 0) {
@@ -53,9 +56,34 @@ const UserCardList = () => {
         if (result.isConfirmed) {
           navigate("/sing-in-sing-up");
         } else if (result.isDenied) {
-          Swal.fire("Orders Placed!", "", "success")
-            .then(localStorage.removeItem("cartList"))
-            .then(setCardDataObj([]));
+          axios
+            .post(
+              `${import.meta.env.VITE_DATABASE_URL}/CheckOutHandle`,
+              {
+                user: "Anonymous",
+                data: {
+                  user: "Anonymous",
+                  date: new Date(),
+                  orders: cardDataObj,
+                  price: totalPrice,
+                },
+              },
+              { withCredentials: true }
+            )
+            .then((res) => {
+              Swal.fire("Orders Placed!", "", "success").then(() => {
+                localStorage.removeItem("cartList");
+                setCardDataObj([]);
+              });
+            })
+            .catch((error) => {
+              console.error("Error placing order:", error);
+              Swal.fire(
+                "Failed to Place Orders",
+                error.response?.data?.error || "An error occurred",
+                "error"
+              );
+            });
         }
       });
     } else if (cardDataObj.length > 0) {
@@ -69,11 +97,34 @@ const UserCardList = () => {
         confirmButtonText: "Conform!",
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success",
-          });
+          axios
+            .post(
+              `${import.meta.env.VITE_DATABASE_URL}/CheckOutHandle`,
+              {
+                user: user.email,
+                data: {
+                  user: user.email,
+                  date: new Date(),
+                  orders: cardDataObj,
+                  price: totalPrice,
+                },
+              },
+              { withCredentials: true }
+            )
+            .then((res) => {
+              Swal.fire("Orders Placed!", "", "success").then(() => {
+                localStorage.removeItem("cartList");
+                setCardDataObj([]);
+              });
+            })
+            .catch((error) => {
+              console.error("Error placing order:", error);
+              Swal.fire(
+                "Failed to Place Orders",
+                error.response?.data?.error || "An error occurred",
+                "error"
+              );
+            });
         }
       });
     }
@@ -102,7 +153,7 @@ const UserCardList = () => {
         {cardDataObj?.length ? (
           cardDataObj?.map((e) => (
             <UserCard
-              key={e.id}
+              key={`cardId${e.id}`}
               dataLS={e}
               setCardDataObj={setCardDataObj}
               cardDataObj={cardDataObj}

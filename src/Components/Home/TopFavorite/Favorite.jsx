@@ -15,7 +15,7 @@ const Favorite = () => {
 
   useEffect(() => setFoods(data), [data]);
 
-  console.log(foods);
+
 
   if (isLoading) return;
   if (error) {
