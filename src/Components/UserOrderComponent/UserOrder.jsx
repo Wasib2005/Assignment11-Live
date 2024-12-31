@@ -41,7 +41,7 @@ const UserOrder = ({ order }) => {
             : "Pending"}
         </h1>
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-between md:hidden">
         <h1 className=" md:text-xl font-semibold">
           Date: {formattedDate}
         </h1>
@@ -59,7 +59,7 @@ const UserOrder = ({ order }) => {
             : "Pending"}
         </h1>
       </div>
-      <div className="p-3 grid gap-3">
+      <div className="p-3 m-3 grid gap-3 border rounded-xl">
         {order?.orders?.map((data, i) => (
           <OrderItem key={`orderListItem${data?.item?.id}${i}`} item={data} />
         ))}

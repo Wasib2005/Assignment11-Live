@@ -42,7 +42,7 @@ const NavBar = () => {
           Foods Gallery
         </NavLink>
       </li>
-      {(!isUserOwner && user) && (
+      {!isUserOwner && user && (
         <li className="p-4">
           <NavLink to="/order" className={navLinkClass}>
             Order
@@ -52,13 +52,13 @@ const NavBar = () => {
       {isUserOwner && (
         <>
           <li className="p-4">
-            <NavLink to="/foods-list" className={navLinkClass}>
-              Foods List
+            <NavLink to="/upload-foods" className={navLinkClass}>
+              Add/Edit Foods
             </NavLink>
           </li>
           <li className="p-4">
-            <NavLink to="/upload-foods" className={navLinkClass}>
-              Add/Edit Foods
+            <NavLink to="/owner-orders" className={navLinkClass}>
+              Order
             </NavLink>
           </li>
         </>

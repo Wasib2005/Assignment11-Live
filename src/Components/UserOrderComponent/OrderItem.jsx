@@ -7,11 +7,11 @@ const OrderItem = (data) => {
 
   if (isLoading) return <p>Loading...</p>;
 
-  console.log(fetchedData.price);
+
 
   return (
     <>
-      <div className="flex justify-around items-center text-[10px]">
+      <div className="flex justify-around items-center text-[10px] md:text-lg">
         <img
           className="border w-20 h-20"
           src={fetchedData.image["1:1"]}
